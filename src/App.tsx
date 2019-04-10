@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 
+import { GrandTours } from './components'
+
 import './App.css'
 
 const client = new ApolloClient({
@@ -16,6 +18,8 @@ class App extends Component {
           <header className="App-header">
             <p>GraphQL Client</p>
           </header>
+
+          <GrandTours />
         </div>
       </ApolloProvider>
     )
