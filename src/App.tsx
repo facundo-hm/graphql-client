@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
+import React, { Component } from 'react'
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
 
-import "./App.css";
+import './App.css'
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql"
-});
+  uri: 'http://localhost:4000/graphql',
+})
 
 class App extends Component {
   render() {
@@ -18,8 +18,8 @@ class App extends Component {
           </header>
         </div>
       </ApolloProvider>
-    );
+    )
   }
 }
 
-export default App;
+export default App
