@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 
-import { GrandTours } from './components'
+import { GrandTours, Riders } from './components'
 
 import './App.css'
 
@@ -20,6 +20,8 @@ class App extends Component {
           </header>
 
           <GrandTours />
+
+          <Riders />
         </div>
       </ApolloProvider>
     )

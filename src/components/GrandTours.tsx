@@ -3,17 +3,14 @@ import { Table } from 'reactstrap'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 
-interface Data {
-  grandTours: Array<{
-    id: string
-    name: string
-    date: string
-    region: string
-    firstEdition: number
-    editions: number
-    jerseyColor: string
-  }>
-}
+type QueryFields =
+  | 'id'
+  | 'name'
+  | 'date'
+  | 'region'
+  | 'firstEdition'
+  | 'editions'
+  | 'jerseyColor'
 
 const GET_GRAND_TOURS = gql`
   {
@@ -30,7 +27,7 @@ const GET_GRAND_TOURS = gql`
 `
 
 export const GrandTours = () => (
-  <Query<Data> query={GET_GRAND_TOURS}>
+  <Query<GrandTourData<QueryFields>> query={GET_GRAND_TOURS}>
     {({ loading, error, data }) => {
       if (loading) return 'Loading...'
 
@@ -51,18 +48,17 @@ export const GrandTours = () => (
           </thead>
 
           <tbody>
-            {data &&
-              data.grandTours.map((gt, index) => (
-                <tr key={index}>
-                  <th scope="row">{gt.id}</th>
-                  <td>{gt.name}</td>
-                  <td>{gt.date}</td>
-                  <td>{gt.region}</td>
-                  <td>{gt.firstEdition}</td>
-                  <td>{gt.editions}</td>
-                  <td>{gt.jerseyColor}</td>
-                </tr>
-              ))}
+            {data!.grandTours.map((gt, index) => (
+              <tr key={index}>
+                <th scope="row">{gt.id}</th>
+                <td>{gt.name}</td>
+                <td>{gt.date}</td>
+                <td>{gt.region}</td>
+                <td>{gt.firstEdition}</td>
+                <td>{gt.editions}</td>
+                <td>{gt.jerseyColor}</td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       )
