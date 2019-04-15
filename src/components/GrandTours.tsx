@@ -27,7 +27,7 @@ const GET_GRAND_TOURS = gql`
 `
 
 export const GrandTours = () => (
-  <Query<GrandTourData<QueryFields>> query={GET_GRAND_TOURS}>
+  <Query<GrandToursData<QueryFields>> query={GET_GRAND_TOURS}>
     {({ loading, error, data }) => {
       if (loading) return 'Loading...'
 

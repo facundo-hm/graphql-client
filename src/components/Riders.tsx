@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost'
 
 type QueryFields = 'id' | 'name' | 'country' | 'status'
 
-const GET_GRAND_TOURS = gql`
+const GET_RIDERS = gql`
   {
     riders(quantity: null) {
       id
@@ -17,7 +17,7 @@ const GET_GRAND_TOURS = gql`
 `
 
 export const Riders = () => (
-  <Query<RidersData<QueryFields>> query={GET_GRAND_TOURS}>
+  <Query<RidersData<QueryFields>> query={GET_RIDERS}>
     {({ loading, error, data }) => {
       if (loading) return 'Loading...'
 

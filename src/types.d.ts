@@ -1,4 +1,4 @@
-type Query<T, K> = Pick<T, Extract<keyof T, K>>
+type Query<T, F> = Pick<T, Extract<keyof T, F>>
 
 type Data<F, T, K> = { [keys in K]: Array<Query<T, F>> }
 
@@ -12,7 +12,7 @@ interface GrandTour {
   jerseyColor: string
 }
 
-type GrandTourData<F> = Data<F, GrandTour, 'grandTours'>
+type GrandToursData<F> = Data<F, GrandTour, 'grandTours'>
 
 interface Rider {
   id: string
@@ -22,3 +22,16 @@ interface Rider {
 }
 
 type RidersData<F> = Data<F, Rider, 'riders'>
+
+interface TourWinner {
+  grandTour: GrandTour
+  winner: Rider
+}
+
+interface TourEdition {
+  id: string
+  year: number
+  toursEditions: TourWinner[]
+}
+
+type EditionsData<F> = Data<F, TourEdition, 'editions'>
