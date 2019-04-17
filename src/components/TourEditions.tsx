@@ -1,5 +1,5 @@
-import React from 'react'
-import { Table } from 'reactstrap'
+import React, { useState } from 'react'
+import { Table, Input, FormGroup, Label, Col } from 'reactstrap'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 
@@ -21,45 +21,71 @@ const GET_EDITIONS = gql`
   }
 `
 
-export const TourEditions = () => (
-  <Query<EditionsData<QueryFields>> query={GET_EDITIONS}>
-    {({ loading, error, data }) => {
-      if (loading) return 'Loading...'
+export const TourEditions = () => {
+  const [year, setYear] = useState(2015)
 
-      if (error) return `Error! ${error.message}`
+  const changeYear = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setYear(Number(e.target.value))
+  }
 
-      return (
-        <Table>
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Tour</th>
-              <th>Rider</th>
-            </tr>
-          </thead>
+  return (
+    <Query<EditionsData<QueryFields>> query={GET_EDITIONS}>
+      {({ loading, error, data }) => {
+        if (loading) return 'Loading...'
 
-          <tbody>
-            {data!.editions
-              .filter(edition => edition.year === 2015)
-              .reduce(
-                (prev, edition, eIndex) => {
-                  const toursEditions = edition.toursEditions.map(
-                    (tourEdition, tIndex) => (
-                      <tr key={eIndex + tIndex}>
-                        <th scope="row">{edition.year}</th>
-                        <td>{tourEdition.grandTour.name}</td>
-                        <td>{tourEdition.winner.name}</td>
-                      </tr>
-                    ),
-                  )
+        if (error) return `Error! ${error.message}`
 
-                  return prev.concat(toursEditions)
-                },
-                [] as JSX.Element[],
-              )}
-          </tbody>
-        </Table>
-      )
-    }}
-  </Query>
-)
+        const { editions } = data!
+
+        return (
+          <div>
+            <FormGroup row>
+              <Label for="exampleSelect" sm={2}>
+                Select Year
+              </Label>
+
+              <Col sm={5}>
+                <Input type="select" onChange={changeYear}>
+                  {editions.map((edition, i) => (
+                    <option key={i}>{edition.year}</option>
+                  ))}
+                </Input>
+              </Col>
+            </FormGroup>
+
+            <Table>
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Tour</th>
+                  <th>Rider</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {editions
+                  .filter(edition => edition.year === year)
+                  .reduce(
+                    (prev, edition, eIndex) => {
+                      const toursEditions = edition.toursEditions.map(
+                        (tourEdition, tIndex) => (
+                          <tr key={eIndex + tIndex}>
+                            <th scope="row">{edition.year}</th>
+                            <td>{tourEdition.grandTour.name}</td>
+                            <td>{tourEdition.winner.name}</td>
+                          </tr>
+                        ),
+                      )
+
+                      return prev.concat(toursEditions)
+                    },
+                    [] as JSX.Element[],
+                  )}
+              </tbody>
+            </Table>
+          </div>
+        )
+      }}
+    </Query>
+  )
+}
