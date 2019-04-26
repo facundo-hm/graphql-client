@@ -10,6 +10,7 @@ interface GrandTour {
   firstEdition: number
   editions: number
   jerseyColor: string
+  __typename?: string
 }
 
 type GrandToursData<F> = Data<F, GrandTour, 'grandTours'>
@@ -19,6 +20,7 @@ interface Rider {
   name: string
   country: string
   status: string
+  __typename?: string
 }
 
 type RidersData<F> = Data<F, Rider, 'riders'>
@@ -35,3 +37,5 @@ interface TourEdition {
 }
 
 type EditionsData<F> = Data<F, TourEdition, 'editions'>
+
+type EntitiesData<F> = Data<F, GrandTour | Rider, 'searchByName'>
